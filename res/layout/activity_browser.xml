@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_action_bar_height"
+        android:background="@drawable/top_bar"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/close"
+            android:layout_width="@dimen/base_action_bar_height"
+            android:layout_height="@dimen/base_action_bar_height"
+            android:background="#00000000"
+            android:contentDescription="@string/browser_close"
+            android:src="@drawable/browser_icon_close" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="#FFF"
+            android:textSize="19sp" />
+
+        <ImageButton
+            android:id="@+id/openMenu"
+            android:layout_width="@dimen/base_action_bar_height"
+            android:layout_height="@dimen/base_action_bar_height"
+            android:background="#00000000"
+            android:contentDescription="@string/browser_menu"
+            android:src="@drawable/browser_icon_menu" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:id="@+id/progressBar"
+            android:layout_width="100dp"
+            android:layout_height="3dp"
+            android:layout_alignParentTop="true"
+            android:background="#8b0000" />
+
+        <com.greenshadow.thebutton.view.AnimationMenu
+            android:id="@+id/animationMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#88000000"
+            android:gravity="right"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

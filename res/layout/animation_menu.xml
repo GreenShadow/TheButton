@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:greenshadow="http://schemas.android.com/apk/res/com.greenshadow.thebutton"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right"
+    android:orientation="vertical" >
+
+    <com.greenshadow.thebutton.view.AnimationMenuButton
+        android:id="@+id/sendToFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        greenshadow:image="@drawable/browser_icon_send_to_friend"
+        greenshadow:text="发送给朋友" />
+
+    <com.greenshadow.thebutton.view.AnimationMenuButton
+        android:id="@+id/openWithBrowser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        greenshadow:image="@drawable/browser_icon_open_with_browser"
+        greenshadow:text="用浏览器打开" />
+
+    <com.greenshadow.thebutton.view.AnimationMenuButton
+        android:id="@+id/copyLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        greenshadow:image="@drawable/browser_icon_copy"
+        greenshadow:text="复制链接" />
+
+    <com.greenshadow.thebutton.view.AnimationMenuButton
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        greenshadow:image="@drawable/browser_icon_refresh"
+        greenshadow:text="刷新页面" />
+
+</LinearLayout>
