@@ -8,6 +8,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -23,7 +24,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -55,7 +59,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	private TextView tv_set_name, tv_set_nick, tv_set_gender;
-	private ImageView iv_set_avator, iv_arraw, iv_nickarraw;
+	private ImageView iv_set_avator, iv_arraw;
+	private EditText et_set_nick;
 	private LinearLayout layout_all;
 
 	private Button btn_chat, btn_add_friend;
@@ -76,6 +81,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	private int degree = 0;
 	private String path;
 
+	private InputMethodManager imm;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,6 +94,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		setContentView(R.layout.activity_set_info);
 		from = getIntent().getStringExtra("from");// me add other
 		username = getIntent().getStringExtra("username");
+
+		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		initView();
 	}
 
@@ -94,7 +103,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		layout_all = (LinearLayout) findViewById(R.id.layout_all);
 		iv_set_avator = (ImageView) findViewById(R.id.iv_set_avator);
 		iv_arraw = (ImageView) findViewById(R.id.iv_arraw);
-		iv_nickarraw = (ImageView) findViewById(R.id.iv_nickarraw);
 		tv_set_name = (TextView) findViewById(R.id.tv_set_name);
 		tv_set_nick = (TextView) findViewById(R.id.tv_set_nick);
 		layout_head = (RelativeLayout) findViewById(R.id.layout_head);
@@ -109,17 +117,18 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		btn_add_friend.setEnabled(false);
 		btn_chat.setEnabled(false);
 		if (from.equals("me")) {
+			et_set_nick = (EditText) findViewById(R.id.et_set_nick);
 			initTopBarForLeft("个人资料");
+			layout_all.setOnClickListener(this);
 			layout_head.setOnClickListener(this);
 			layout_nick.setOnClickListener(this);
 			layout_gender.setOnClickListener(this);
-			iv_nickarraw.setVisibility(View.VISIBLE);
 			iv_arraw.setVisibility(View.VISIBLE);
 			btn_chat.setVisibility(View.GONE);
 			btn_add_friend.setVisibility(View.GONE);
+			setNickListener();
 		} else {
 			initTopBarForLeft("详细资料");
-			iv_nickarraw.setVisibility(View.INVISIBLE);
 			iv_arraw.setVisibility(View.INVISIBLE);
 			btn_chat.setVisibility(View.VISIBLE);
 			btn_chat.setOnClickListener(this);
@@ -131,6 +140,55 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			}
 			initOtherData(username);
 		}
+	}
+
+	/**
+	 * 为et_set_nick设置完成监听器
+	 */
+	private void setNickListener() {
+		et_set_nick
+				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+					@Override
+					public boolean onEditorAction(TextView v, int actionId,
+							KeyEvent event) {
+						if (actionId == EditorInfo.IME_ACTION_DONE)
+							updateNick();
+						return true;
+					}
+				});
+	}
+
+	/**
+	 * 更新昵称
+	 */
+	private void updateNick() {
+		if (et_set_nick.getText().toString()
+				.equals(tv_set_nick.getText().toString())) {
+			ShowToast("未作修改！");
+			et_set_nick.setVisibility(View.GONE);
+			tv_set_nick.setText(et_set_nick.getText());
+			tv_set_nick.setVisibility(View.VISIBLE);
+			imm.hideSoftInputFromWindow(et_set_nick.getWindowToken(), 0); // 强制隐藏输入法
+			return;
+		}
+
+		User u = new User();
+		u.setNick(et_set_nick.getText().toString());
+		updateUserData(u, new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				ShowToast("修改成功！");
+				et_set_nick.setVisibility(View.GONE);
+				tv_set_nick.setText(et_set_nick.getText());
+				tv_set_nick.setVisibility(View.VISIBLE);
+				imm.hideSoftInputFromWindow(et_set_nick.getWindowToken(), 0); // 强制隐藏输入法
+			}
+
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				ShowToast("修改失败！" + arg1);
+			}
+		});
 	}
 
 	private void initMeData() {
@@ -199,19 +257,49 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.layout_all:
+			if (et_set_nick != null) {
+				if (et_set_nick.getVisibility() == View.VISIBLE)
+					updateNick();
+			}
+			break;
 		case R.id.btn_chat:// 发起聊天
-			Intent intent = new Intent(this, ChatActivity.class);
-			intent.putExtra("user", user);
-			startAnimActivity(intent);
-			finish();
+			if (ChatActivity.chatActivityInstance != null
+					&& ChatActivity.chatActivityInstance.targetUser
+							.getObjectId().equals(user.getObjectId())) {
+			} else {
+				Intent intent = new Intent(this, ChatActivity.class);
+				intent.putExtra("user", user);
+				startAnimActivity(intent);
+			}
+			this.finish();
 			break;
 		case R.id.layout_head:
+			if (et_set_nick != null) {
+				if (et_set_nick.getVisibility() == View.VISIBLE)
+					updateNick();
+			}
 			showAvatarPop();
 			break;
 		case R.id.layout_nick:
-			startAnimActivity(UpdateInfoActivity.class);
+			if (et_set_nick != null) {
+				if (et_set_nick.getVisibility() == View.GONE) {
+					et_set_nick.setVisibility(View.VISIBLE);
+					et_set_nick.requestFocus();
+					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS); // 显示输入法
+					et_set_nick.setText(tv_set_nick.getText());
+					et_set_nick.selectAll();
+					tv_set_nick.setVisibility(View.GONE);
+				} else {
+					updateNick();
+				}
+			}
 			break;
 		case R.id.layout_gender:// 性别
+			if (et_set_nick != null) {
+				if (et_set_nick.getVisibility() == View.VISIBLE)
+					updateNick();
+			}
 			showSexChooseDialog();
 			break;
 		case R.id.btn_add_friend:// 添加好友
@@ -225,12 +313,17 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	}
 
 	private void showSexChooseDialog() {
+		final int choose = tv_set_gender.getText().toString().equals("男") ? 0
+				: 1;
 		new AlertDialog.Builder(this)
-				.setSingleChoiceItems(sexs, 0,
+				.setSingleChoiceItems(sexs, choose,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
-								updateInfo(which);
+								if (which == choose)
+									ShowToast("未作修改！");
+								else
+									updateInfo(which);
 								dialog.dismiss();
 							}
 						}) //

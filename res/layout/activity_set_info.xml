@@ -74,15 +74,19 @@
             <TextView
                 android:id="@+id/tv_set_nick"
                 style="@style/Smile.TextView._Black"
+                android:layout_marginRight="20dp"
                 android:drawablePadding="10dp" />
 
-            <ImageView
-                android:id="@+id/iv_nickarraw"
-                style="@style/Smile.ImageView"
-                android:layout_width="20dp"
-                android:contentDescription="@string/add_nick"
-                android:scaleType="centerInside"
-                android:src="@drawable/register_bottom_arrow" />
+            <EditText
+                android:id="@+id/et_set_nick"
+                style="@style/Smile.TextView._Black"
+                android:layout_marginRight="20dp"
+                android:background="#0000"
+                android:drawablePadding="10dp"
+                android:hint="@string/add_name_hint"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 

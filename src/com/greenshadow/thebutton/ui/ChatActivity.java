@@ -198,7 +198,7 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 	/**
 	 * 长按说话
 	 */
-	class VoiceTouchListen implements View.OnTouchListener {
+	private class VoiceTouchListen implements View.OnTouchListener {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			switch (event.getAction()) {
@@ -237,7 +237,7 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 						BmobLog.i("voice", "放弃发送语音");
 					} else {
 						int recordTime = recordManager.stopRecording();
-						if (recordTime > 1) {
+						if (recordTime >= 1) {
 							// 发送语音文件
 							BmobLog.i("voice", "发送语音");
 							sendVoiceMessage(
@@ -245,7 +245,7 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 									recordTime);
 						} else {// 录音时间过短，则提示录音过短的提示
 							layout_record.setVisibility(View.GONE);
-							showShortToast().show();
+							getShortToast().show();
 						}
 					}
 				} catch (Exception e) {
@@ -284,7 +284,7 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 	/**
 	 * 显示录音时间过短的Toast
 	 */
-	private Toast showShortToast() {
+	private Toast getShortToast() {
 		if (toast == null) {
 			toast = new Toast(this);
 		}

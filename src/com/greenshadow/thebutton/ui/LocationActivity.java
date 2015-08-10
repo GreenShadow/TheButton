@@ -61,6 +61,8 @@ public class LocationActivity extends BaseActivity implements
 	private void initBaiduMap() {
 		// 地图初始化
 		mMapView = (MapView) findViewById(R.id.bmapView);
+		// 隐藏缩放按钮
+		mMapView.removeViewAt(2);
 		mBaiduMap = mMapView.getMap();
 		// 设置缩放级别
 		mBaiduMap.setMaxAndMinZoomLevel(18, 13);
@@ -198,7 +200,8 @@ public class LocationActivity extends BaseActivity implements
 		public void onReceive(Context context, Intent intent) {
 			String s = intent.getAction();
 			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-				ShowToast("key 验证出错! 请在 AndroidManifest.xml 文件中检查 key 设置");
+				ShowToast("百度地图加载异常");
+				BmobLog.e("百度地图", "百度地图key验证出错");
 			} else if (s
 					.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
 				ShowToast("网络出错");

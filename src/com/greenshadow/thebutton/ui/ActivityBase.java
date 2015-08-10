@@ -44,5 +44,4 @@ public class ActivityBase extends BaseActivity {
 						.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
-
 }
