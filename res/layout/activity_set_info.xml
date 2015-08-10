@@ -141,6 +141,20 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/layout_manage_uninterested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/about_mid_bg"
+        android:padding="10dp" >
+
+        <TextView
+            style="@style/Smile.TextView._Black"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/set_manage_my_uninterested" />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/btn_add_friend"
         style="@style/Smile.Button.theme"

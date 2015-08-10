@@ -36,7 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.config.BmobConfig;
-import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.FindListener;
@@ -65,7 +64,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	private Button btn_chat, btn_add_friend;
 	private RelativeLayout layout_head, layout_nick, layout_gender,
-			layout_black_tips;
+			layout_uninterested;
 
 	private String from = "";
 	private String username = "";
@@ -108,8 +107,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		layout_head = (RelativeLayout) findViewById(R.id.layout_head);
 		layout_nick = (RelativeLayout) findViewById(R.id.layout_nick);
 		layout_gender = (RelativeLayout) findViewById(R.id.layout_gender);
-		// 黑名单提示语
-		layout_black_tips = (RelativeLayout) findViewById(R.id.layout_black_tips);
+		layout_uninterested = (RelativeLayout) findViewById(R.id.layout_manage_uninterested);
 		tv_set_gender = (TextView) findViewById(R.id.tv_set_gender);
 		btn_chat = (Button) findViewById(R.id.btn_chat);
 		btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
@@ -123,12 +121,14 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			layout_head.setOnClickListener(this);
 			layout_nick.setOnClickListener(this);
 			layout_gender.setOnClickListener(this);
+			layout_uninterested.setOnClickListener(this);
 			iv_arraw.setVisibility(View.VISIBLE);
 			btn_chat.setVisibility(View.GONE);
 			btn_add_friend.setVisibility(View.GONE);
 			setNickListener();
 		} else {
 			initTopBarForLeft("详细资料");
+			layout_uninterested.setVisibility(View.GONE);
 			iv_arraw.setVisibility(View.INVISIBLE);
 			btn_chat.setVisibility(View.VISIBLE);
 			btn_chat.setOnClickListener(this);
@@ -164,7 +164,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	private void updateNick() {
 		if (et_set_nick.getText().toString()
 				.equals(tv_set_nick.getText().toString())) {
-			ShowToast("未作修改！");
 			et_set_nick.setVisibility(View.GONE);
 			tv_set_nick.setText(et_set_nick.getText());
 			tv_set_nick.setVisibility(View.VISIBLE);
@@ -224,14 +223,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		tv_set_name.setText(user.getUsername());
 		tv_set_nick.setText(user.getNick());
 		tv_set_gender.setText(user.getSex() == true ? "男" : "女");
-		// 检测是否为黑名单用户
-		if (from.equals("other")) {
-			if (BmobDB.create(this).isBlackUser(user.getUsername())) {
-				layout_black_tips.setVisibility(View.VISIBLE);
-			} else {
-				layout_black_tips.setVisibility(View.GONE);
-			}
-		}
 	}
 
 	/**
@@ -301,6 +292,14 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					updateNick();
 			}
 			showSexChooseDialog();
+			break;
+		case R.id.layout_manage_uninterested:
+			// TODO
+			if (et_set_nick != null) {
+				if (et_set_nick.getVisibility() == View.VISIBLE)
+					updateNick();
+			}
+			startAnimActivity(ManageUninterestedActivity.class);
 			break;
 		case R.id.btn_add_friend:// 添加好友
 			addFriend();
@@ -382,6 +381,9 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				});
 	}
 
+	/**
+	 * 显示选择头像的PopupWindow
+	 */
 	private void showAvatarPop() {
 		View view = LayoutInflater.from(this).inflate(R.layout.pop_showavator,
 				null);
@@ -425,7 +427,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			}
 		});
 		layout_choose.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				ShowLog("点击相册");
@@ -621,5 +622,16 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		User current = (User) userManager.getCurrentUser(User.class);
 		user.setObjectId(current.getObjectId());
 		user.update(this, listener);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && et_set_nick != null) {
+			if (et_set_nick.getVisibility() == View.VISIBLE)
+				updateNick();
+			else
+				this.finish();
+		}
+		return true;
 	}
 }

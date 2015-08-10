@@ -1,5 +1,6 @@
 package com.greenshadow.thebutton.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import android.annotation.SuppressLint;
@@ -54,7 +55,10 @@ public class SharePreferenceUtil {
 		editor.commit();
 	}
 
-	public void addUninterestedTags(String tag) {
+	/**
+	 * 添加不感兴趣
+	 */
+	public void addUninterestedTag(String tag) {
 		HashSet<String> uninterestedSet = (HashSet<String>) mSharedPreferences
 				.getStringSet(SHARED_KEY_UNINTERESTED, new HashSet<String>());
 		uninterestedSet.add(tag);
@@ -62,15 +66,37 @@ public class SharePreferenceUtil {
 		editor.commit();
 	}
 
+	/**
+	 * 删除某一项不感兴趣
+	 */
+	public void deleteUninterestedTag(String tag) {
+		HashSet<String> uninterestedSet = (HashSet<String>) mSharedPreferences
+				.getStringSet(SHARED_KEY_UNINTERESTED, new HashSet<String>());
+		if (uninterestedSet.contains(tag))
+			uninterestedSet.remove(tag);
+		editor.putStringSet(SHARED_KEY_UNINTERESTED, uninterestedSet);
+		editor.commit();
+	}
+
+	/**
+	 * 判断是否为不感兴趣
+	 */
 	public boolean isUninterested(String tag) {
 		HashSet<String> uninterestedSet = (HashSet<String>) mSharedPreferences
 				.getStringSet(SHARED_KEY_UNINTERESTED, new HashSet<String>());
-		// for (String item : uninterestedSet) {
-		// if (tag.equals(item))
-		// return true;
-		// }
 		if (uninterestedSet.contains(tag))
 			return true;
 		return false;
+	}
+
+	/**
+	 * 得到所有的不给你兴趣标签
+	 */
+	public ArrayList<String> getAllUninterested() {
+		HashSet<String> uninterestedSet = (HashSet<String>) mSharedPreferences
+				.getStringSet(SHARED_KEY_UNINTERESTED, new HashSet<String>());
+		ArrayList<String> uninterestedList = new ArrayList<String>(
+				uninterestedSet);
+		return uninterestedList;
 	}
 }
