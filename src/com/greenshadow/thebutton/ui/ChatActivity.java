@@ -1016,6 +1016,8 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 
 	@Override
 	protected void onDestroy() {
+		chatActivityInstance = null; // Activity销毁应当让这个实例也销毁
+
 		super.onDestroy();
 		hideSoftInputView();
 		try {

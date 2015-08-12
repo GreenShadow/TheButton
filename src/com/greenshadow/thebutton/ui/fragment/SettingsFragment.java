@@ -15,6 +15,7 @@ import cn.bmob.im.BmobUserManager;
 
 import com.greenshadow.thebutton.CustomApplication;
 import com.greenshadow.thebutton.R;
+import com.greenshadow.thebutton.ui.AboutActivity;
 import com.greenshadow.thebutton.ui.FragmentBase;
 import com.greenshadow.thebutton.ui.LoginActivity;
 import com.greenshadow.thebutton.ui.SetMyInfoActivity;
@@ -29,7 +30,7 @@ public class SettingsFragment extends FragmentBase implements OnClickListener {
 	private Button btn_logout;
 	private TextView tv_set_name;
 	private RelativeLayout layout_info, rl_switch_voice, rl_switch_vibrate,
-			rl_switch_notifacation;
+			rl_switch_notifacation, rl_about;
 
 	private ImageView iv_open_voice, iv_close_voice, iv_open_vibrate,
 			iv_close_vibrate, iv_open_notifacation, iv_close_notifacation;
@@ -61,9 +62,11 @@ public class SettingsFragment extends FragmentBase implements OnClickListener {
 		rl_switch_voice = (RelativeLayout) findViewById(R.id.rl_switch_voice);
 		rl_switch_vibrate = (RelativeLayout) findViewById(R.id.rl_switch_vibrate);
 		rl_switch_notifacation = (RelativeLayout) findViewById(R.id.rl_switch_notifacation);
+		rl_about = (RelativeLayout) findViewById(R.id.rl_about);
 		rl_switch_voice.setOnClickListener(this);
 		rl_switch_vibrate.setOnClickListener(this);
 		rl_switch_notifacation.setOnClickListener(this);
+		rl_about.setOnClickListener(this);
 
 		iv_open_voice = (ImageView) findViewById(R.id.iv_open_voice);
 		iv_close_voice = (ImageView) findViewById(R.id.iv_close_voice);
@@ -111,7 +114,7 @@ public class SettingsFragment extends FragmentBase implements OnClickListener {
 		case R.id.btn_logout:
 			CustomApplication.getInstance().logout();
 			getActivity().finish();
-			startActivity(new Intent(getActivity(), LoginActivity.class));
+			startAnimActivity(LoginActivity.class);
 			break;
 		case R.id.rl_switch_voice:
 			if (iv_open_voice.getVisibility() == View.VISIBLE) {
@@ -123,7 +126,6 @@ public class SettingsFragment extends FragmentBase implements OnClickListener {
 				iv_close_voice.setVisibility(View.INVISIBLE);
 				mSharedUtil.setAllowVoiceEnable(true);
 			}
-
 			break;
 		case R.id.rl_switch_vibrate:
 			if (iv_open_vibrate.getVisibility() == View.VISIBLE) {
@@ -146,6 +148,9 @@ public class SettingsFragment extends FragmentBase implements OnClickListener {
 				iv_close_notifacation.setVisibility(View.INVISIBLE);
 				mSharedUtil.setPushNotifyEnable(true);
 			}
+			break;
+		case R.id.rl_about:
+			startAnimActivity(AboutActivity.class);
 		}
 	}
 }

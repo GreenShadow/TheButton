@@ -20,6 +20,11 @@ public class Config {
 	public static final String UNINTERESTE_ACTION = "com.greenshadow.thebutton.uninterested";
 
 	/**
+	 * 新版本检测的Action
+	 */
+	public static final String NEW_VERSION_ACTION = "com.greenshadow.thebutton.newversion";
+
+	/**
 	 * SharePreference名字
 	 */
 	public static final String PREFERENCE_NAME = "_sharedinfo";
@@ -38,4 +43,29 @@ public class Config {
 	 * 地球半径
 	 */
 	public static final double EARTH_RADIUS = 6378137;
+
+	/**
+	 * 项目主页
+	 */
+	public static final String MAIN_PAGE = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git";
+
+	/**
+	 * 版本号url
+	 */
+	public static final String VERSION_URL = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git/raw/master/version";
+
+	/**
+	 * 新版本特性url
+	 */
+	public static final String NEW_VERSION_DETAILS = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git/raw/master/newversion";
+
+	/**
+	 * 更新历史url
+	 */
+	public static final String README_URL = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git/blob/master/README.md";
+
+	/**
+	 * apk url
+	 */
+	public static final String APK_URL = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git/raw/master/TheButton.apk";
 }

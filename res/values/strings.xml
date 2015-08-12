@@ -33,6 +33,7 @@
     <string name="set_vibrate">震动</string>
     <string name="set_notifacation">允许接收推送消息</string>
     <string name="set_manage_my_uninterested">管理我不感兴趣的标签</string>
+    <string name="set_about">关于</string>
     <string name="tips">提示</string>
     <string name="logout">退出登陆</string>
     <string name="pop_photo">拍照</string>
@@ -69,5 +70,11 @@
     <string name="browser_close">关闭</string>
     <string name="delete">删除</string>
     <string name="browser_menu">菜单</string>
+    <string name="about_features">版本特性</string>
+    <string name="about_update">检查更新</string>
+    <string name="about_main_page">项目主页</string>
+    <string name="about_team">扣子团队 2015</string>
+    <string name="update">更新</string>
+    <string name="update_install">下载完成，点击安装</string>
 
 </resources>

@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 public class NotificationUtil {
+	public static final int UPDATE_NOTIFICATION_ID = 255;
+
 	private NotificationManager mNotificationManager;
 	private int notificationCount = 10; // 这是随便取的一个值，不要在意这些细节^_^
 
@@ -25,6 +27,17 @@ public class NotificationUtil {
 		return mNotificationManager;
 	}
 
+	/**
+	 * 生成推送通知
+	 * 
+	 * @param context
+	 * @param title
+	 * @param content
+	 * @param url
+	 * @param tag
+	 * @param id
+	 * @return
+	 */
 	private Notification generatePushNotification(Context context,
 			String title, String content, String url, String tag, int id) {
 		Intent intent = new Intent(context, BrowserActivity.class); // 通知点击的Intent
@@ -69,6 +82,15 @@ public class NotificationUtil {
 		return notification;
 	}
 
+	/**
+	 * 推送通知
+	 * 
+	 * @param context
+	 * @param title
+	 * @param content
+	 * @param url
+	 * @param tag
+	 */
 	public void notifyPush(Context context, String title, String content,
 			String url, String tag) {
 		mNotificationManager.notify(
@@ -78,6 +100,17 @@ public class NotificationUtil {
 		notificationCount++;
 	}
 
+	/**
+	 * 更新通知
+	 * 
+	 * @param context
+	 */
+	public void notifyUpdate(Context context) {
+	}
+
+	/**
+	 * 取消了一个通知
+	 */
 	public void canceledANotification() {
 		notificationCount--;
 	}

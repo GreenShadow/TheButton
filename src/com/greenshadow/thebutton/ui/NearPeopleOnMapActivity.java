@@ -66,7 +66,7 @@ public class NearPeopleOnMapActivity extends ActivityBase {
 
 		progress = new ProgressDialog(NearPeopleOnMapActivity.this);
 		progress.setMessage("正在查询附近的人...");
-		progress.setCanceledOnTouchOutside(true);
+		progress.setCanceledOnTouchOutside(false);
 		progress.show();
 
 		initView();

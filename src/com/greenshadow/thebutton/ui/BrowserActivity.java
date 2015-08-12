@@ -1,6 +1,5 @@
 package com.greenshadow.thebutton.ui;
 
-import com.greenshadow.thebutton.CustomApplication;
 import com.greenshadow.thebutton.R;
 import com.greenshadow.thebutton.view.AnimationMenu;
 
@@ -43,10 +42,6 @@ public class BrowserActivity extends BaseActivity {
 		String url = intent.getStringExtra("url");
 		if (!url.startsWith("http") && !url.startsWith("ftp"))
 			url = "http://" + url;
-
-		if (from.equals("push"))
-			CustomApplication.getInstance().getNotificationUtil()
-					.canceledANotification();
 
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);

@@ -626,11 +626,13 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && et_set_nick != null) {
-			if (et_set_nick.getVisibility() == View.VISIBLE)
-				updateNick();
-			else
-				this.finish();
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (et_set_nick != null)
+				if (et_set_nick.getVisibility() == View.VISIBLE) {
+					updateNick();
+					return true;
+				}
+			this.finish();
 		}
 		return true;
 	}

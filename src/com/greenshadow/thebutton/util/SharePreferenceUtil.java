@@ -74,6 +74,8 @@ public class SharePreferenceUtil {
 				.getStringSet(SHARED_KEY_UNINTERESTED, new HashSet<String>());
 		if (uninterestedSet.contains(tag))
 			uninterestedSet.remove(tag);
+		editor.remove(SHARED_KEY_UNINTERESTED);
+		editor.commit();
 		editor.putStringSet(SHARED_KEY_UNINTERESTED, uninterestedSet);
 		editor.commit();
 	}
