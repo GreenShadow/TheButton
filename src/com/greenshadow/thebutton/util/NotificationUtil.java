@@ -43,7 +43,6 @@ public class NotificationUtil {
 		Intent intent = new Intent(context, BrowserActivity.class); // 通知点击的Intent
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		intent.putExtra("url", url);
-		intent.putExtra("from", "push");
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 				intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

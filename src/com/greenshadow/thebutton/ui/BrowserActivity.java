@@ -29,7 +29,6 @@ public class BrowserActivity extends BaseActivity {
 	private AnimationMenu menu;
 
 	private int screenWidth;
-	private String from;
 
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
@@ -38,7 +37,6 @@ public class BrowserActivity extends BaseActivity {
 		setContentView(R.layout.activity_browser);
 
 		Intent intent = getIntent();
-		from = intent.getStringExtra("from");
 		String url = intent.getStringExtra("url");
 		if (!url.startsWith("http") && !url.startsWith("ftp"))
 			url = "http://" + url;
@@ -109,17 +107,16 @@ public class BrowserActivity extends BaseActivity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (from.equals("push")) // 如果从同送通知调起则按下返回键直接关闭Activity
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			if (webView.canGoBack())
+				webView.goBack();
+			else
 				this.finish();
-			else {
-				if (webView.canGoBack())
-					webView.goBack();
-				else
-					this.finish();
-			}
-		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
+			break;
+		case KeyEvent.KEYCODE_MENU:
 			openMenu.performClick();
+			break;
 		}
 
 		return true;
