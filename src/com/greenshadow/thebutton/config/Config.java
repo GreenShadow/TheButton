@@ -20,11 +20,6 @@ public class Config {
 	public static final String UNINTERESTE_ACTION = "com.greenshadow.thebutton.uninterested";
 
 	/**
-	 * 新版本检测的Action
-	 */
-	public static final String NEW_VERSION_ACTION = "com.greenshadow.thebutton.newversion";
-
-	/**
 	 * SharePreference名字
 	 */
 	public static final String PREFERENCE_NAME = "_sharedinfo";

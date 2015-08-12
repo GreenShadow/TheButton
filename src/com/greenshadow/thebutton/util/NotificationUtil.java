@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 public class NotificationUtil {
-	public static final int UPDATE_NOTIFICATION_ID = 255;
-
 	private NotificationManager mNotificationManager;
 	private int notificationCount = 10; // 这是随便取的一个值，不要在意这些细节^_^
 
