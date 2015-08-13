@@ -4,6 +4,7 @@ import com.greenshadow.thebutton.CustomApplication;
 import com.greenshadow.thebutton.R;
 import com.greenshadow.thebutton.config.Config;
 import com.greenshadow.thebutton.ui.BrowserActivity;
+import com.greenshadow.thebutton.ui.UpdateActivity;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -103,6 +104,22 @@ public class NotificationUtil {
 	 * @param context
 	 */
 	public void notifyUpdate(Context context) {
+		Intent intent = new Intent(context, UpdateActivity.class);
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+				intent, 0);
+		Notification notification = new Notification.Builder(context) //
+				.setTicker("发现新版本") //
+				.setContentTitle("发现新版本") //
+				.setContentText("点击下载") //
+				.setSmallIcon(R.drawable.small_icon) //
+				.setWhen(System.currentTimeMillis()) //
+				.setContentIntent(pendingIntent) //
+				.getNotification();
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		notification.defaults = Notification.DEFAULT_ALL;
+
+		mNotificationManager.notify(notificationCount, notification);
+		notificationCount++;
 	}
 
 	/**

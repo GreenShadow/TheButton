@@ -95,6 +95,9 @@ public class MyMessageReceiver extends BroadcastReceiver {
 				// 发送推送通知
 				CustomApplication.getInstance().getNotificationUtil()
 						.notifyPush(context, title, content, url, pushTag);
+			} else if (tag.equals("update")) {
+				CustomApplication.getInstance().getNotificationUtil()
+						.notifyUpdate(context);
 			} else {
 				String fromId = BmobJsonUtil.getString(jo,
 						BmobConstant.PUSH_KEY_TARGETID);
