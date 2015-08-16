@@ -61,7 +61,7 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <com.greenshadow.thebutton.view.MyLetterView
+        <com.greenshadow.thebutton.view.SlideBar
             android:id="@+id/right_letter"
             android:layout_width="25dip"
             android:layout_height="match_parent"

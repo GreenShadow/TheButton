@@ -26,6 +26,9 @@ import android.widget.Toast;
 @SuppressLint("HandlerLeak")
 public class PuzzleView extends RelativeLayout implements OnClickListener {
 
+	/**
+	 * 设置拼图的阶数
+	 */
 	private int mColumn = 4;
 	/**
 	 * 容器的内边距

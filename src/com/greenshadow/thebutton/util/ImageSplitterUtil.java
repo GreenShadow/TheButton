@@ -6,6 +6,15 @@ import java.util.List;
 import android.graphics.Bitmap;
 
 public class ImageSplitterUtil {
+
+	/**
+	 * 分割图片
+	 * 
+	 * @param bitmap
+	 * @param piece
+	 *            分割的阶数，例如3阶便分割为3*3=9块
+	 * @return
+	 */
 	public static List<ImagePiece> splitImage(Bitmap bitmap, int piece) {
 		List<ImagePiece> imagePieces = new ArrayList<ImagePiece>();
 

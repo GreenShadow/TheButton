@@ -17,8 +17,8 @@ import com.greenshadow.thebutton.util.CollectionUtils;
 import com.greenshadow.thebutton.util.CommonUtils;
 import com.greenshadow.thebutton.util.PinyinComparator;
 import com.greenshadow.thebutton.view.ClearEditText;
-import com.greenshadow.thebutton.view.MyLetterView;
-import com.greenshadow.thebutton.view.MyLetterView.OnTouchingLetterChangedListener;
+import com.greenshadow.thebutton.view.SlideBar;
+import com.greenshadow.thebutton.view.SlideBar.OnTouchingLetterChangedListener;
 import com.greenshadow.thebutton.view.dialog.DialogTips;
 
 import android.annotation.SuppressLint;
@@ -43,7 +43,7 @@ public class ChooseFriendActivity extends ActivityBase implements
 	private ClearEditText mClearEditText;
 	private TextView dialog;
 	private ListView list_friends;
-	private MyLetterView right_letter;
+	private SlideBar right_letter;
 
 	private UserFriendAdapter userAdapter;// 好友
 	private User user; // 选中的用户
@@ -111,7 +111,7 @@ public class ChooseFriendActivity extends ActivityBase implements
 	}
 
 	private void initRightLetterView() {
-		right_letter = (MyLetterView) findViewById(R.id.right_letter);
+		right_letter = (SlideBar) findViewById(R.id.right_letter);
 		dialog = (TextView) findViewById(R.id.dialog);
 		right_letter.setTextView(dialog);
 		right_letter

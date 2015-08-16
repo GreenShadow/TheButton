@@ -47,9 +47,9 @@ import com.greenshadow.thebutton.util.CharacterParser;
 import com.greenshadow.thebutton.util.CollectionUtils;
 import com.greenshadow.thebutton.util.PinyinComparator;
 import com.greenshadow.thebutton.view.ClearEditText;
-import com.greenshadow.thebutton.view.MyLetterView;
+import com.greenshadow.thebutton.view.SlideBar;
 import com.greenshadow.thebutton.view.HeaderLayout.onRightImageButtonClickListener;
-import com.greenshadow.thebutton.view.MyLetterView.OnTouchingLetterChangedListener;
+import com.greenshadow.thebutton.view.SlideBar.OnTouchingLetterChangedListener;
 import com.greenshadow.thebutton.view.dialog.DialogTips;
 
 /**
@@ -65,7 +65,7 @@ public class ContactFragment extends FragmentBase implements
 	private LinearLayout layout_new;// 新朋友
 	private LinearLayout layout_near;// 附近的人
 	private ListView list_friends;
-	private MyLetterView right_letter;
+	private SlideBar right_letter;
 
 	private UserFriendAdapter userAdapter;// 好友
 	private List<User> friends = new ArrayList<User>();
@@ -250,7 +250,7 @@ public class ContactFragment extends FragmentBase implements
 	}
 
 	private void initRightLetterView() {
-		right_letter = (MyLetterView) findViewById(R.id.right_letter);
+		right_letter = (SlideBar) findViewById(R.id.right_letter);
 		dialog = (TextView) findViewById(R.id.dialog);
 		right_letter.setTextView(dialog);
 		right_letter

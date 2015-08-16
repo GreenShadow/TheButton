@@ -16,7 +16,7 @@ import com.greenshadow.thebutton.util.PixelUtil;
 /**
  * 通讯录右侧快速滚动栏
  */
-public class MyLetterView extends View {
+public class SlideBar extends View {
 	// 触摸事件
 	private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
 	// 26个字母
@@ -32,20 +32,20 @@ public class MyLetterView extends View {
 		this.mTextDialog = mTextDialog;
 	}
 
-	public MyLetterView(Context context, AttributeSet attrs, int defStyle) {
+	public SlideBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public MyLetterView(Context context, AttributeSet attrs) {
+	public SlideBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public MyLetterView(Context context) {
+	public SlideBar(Context context) {
 		super(context);
 	}
 
 	/**
-	 * 重写这个方法
+	 * 重写Draw方法
 	 */
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);

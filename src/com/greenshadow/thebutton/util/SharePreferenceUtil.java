@@ -19,6 +19,13 @@ public class SharePreferenceUtil {
 	private String SHARED_KEY_VIBRATE = "shared_key_vibrate";
 	private String SHARED_KEY_UNINTERESTED = "shared_key_uninterested";
 
+	/**
+	 * 构造方法
+	 * 
+	 * @param context
+	 * @param name
+	 *            这里的名字是加入每一个用户的ID的，所以不会出现多用户混乱的情况
+	 */
 	public SharePreferenceUtil(Context context, String name) {
 		mSharedPreferences = context.getSharedPreferences(name,
 				Context.MODE_PRIVATE);
@@ -30,16 +37,18 @@ public class SharePreferenceUtil {
 		return mSharedPreferences.getBoolean(SHARED_KEY_NOTIFY, true);
 	}
 
+	// 设置是否允许推送通知
 	public void setPushNotifyEnable(boolean isChecked) {
 		editor.putBoolean(SHARED_KEY_NOTIFY, isChecked);
 		editor.commit();
 	}
 
-	// 允许声音
+	// 是否允许声音
 	public boolean isAllowVoice() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_VOICE, true);
 	}
 
+	// 设置是否允许声音
 	public void setAllowVoiceEnable(boolean isChecked) {
 		editor.putBoolean(SHARED_KEY_VOICE, isChecked);
 		editor.commit();

@@ -1,5 +1,6 @@
 package com.greenshadow.thebutton.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
@@ -8,11 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
-import android.view.animation.Animation;
-import android.view.animation.CycleInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
-
 import com.greenshadow.thebutton.R;
 
 /**
@@ -51,6 +48,7 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 		addTextChangedListener(this);
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (getCompoundDrawables()[2] != null) {
@@ -101,22 +99,5 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 
 	@Override
 	public void afterTextChanged(Editable s) {
-	}
-
-	/**
-	 * 设置晃动动画
-	 */
-	public void setShakeAnimation() {
-		this.setAnimation(shakeAnimation(5));
-	}
-
-	/**
-	 * 晃动动画
-	 */
-	public static Animation shakeAnimation(int counts) {
-		Animation translateAnimation = new TranslateAnimation(0, 10, 0, 0);
-		translateAnimation.setInterpolator(new CycleInterpolator(counts));
-		translateAnimation.setDuration(1000);
-		return translateAnimation;
 	}
 }

@@ -847,7 +847,6 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 			layout_more.setVisibility(View.VISIBLE);
 			layout_emo.setVisibility(View.VISIBLE);
 			layout_add.setVisibility(View.GONE);
-			btn_chat_voice.setVisibility(View.GONE);
 			hideSoftInputView();
 		} else {
 			layout_more.setVisibility(View.GONE);
