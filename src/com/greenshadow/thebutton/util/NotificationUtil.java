@@ -59,8 +59,9 @@ public class NotificationUtil {
 		remoteViews.setTextViewText(R.id.tv_notification_content, content);
 
 		Notification.Builder builder = new Notification.Builder(context);
-		Notification notification = builder.setContent(remoteViews)
-				.setTicker("¿Û×ÓÍÆËÍ") //
+		Notification notification = builder //
+				.setContent(remoteViews) //
+				.setTicker(content) //
 				.setWhen(System.currentTimeMillis()) //
 				.setSmallIcon(R.drawable.small_icon) //
 				.setOngoing(false) //

@@ -186,8 +186,4 @@ public class CharacterParser {
 		}
 		return buffer.toString();
 	}
-
-	public String getSpelling() {
-		return this.getSelling(this.getResource());
-	}
 }

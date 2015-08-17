@@ -24,30 +24,6 @@ public class PixelUtil {
 	}
 
 	/**
-	 * dpת px.
-	 */
-	public static int dp2px(float value, Context context) {
-		final float scale = context.getResources().getDisplayMetrics().densityDpi;
-		return (int) (value * (scale / 160) + 0.5f);
-	}
-
-	/**
-	 * pxתdp.
-	 */
-	public static int px2dp(float value) {
-		final float scale = mContext.getResources().getDisplayMetrics().densityDpi;
-		return (int) ((value * 160) / scale + 0.5f);
-	}
-
-	/**
-	 * pxתdp.
-	 */
-	public static int px2dp(float value, Context context) {
-		final float scale = context.getResources().getDisplayMetrics().densityDpi;
-		return (int) ((value * 160) / scale + 0.5f);
-	}
-
-	/**
 	 * spתpx.
 	 */
 	public static int sp2px(float value) {
@@ -59,35 +35,5 @@ public class PixelUtil {
 		}
 		float spvalue = value * r.getDisplayMetrics().scaledDensity;
 		return (int) (spvalue + 0.5f);
-	}
-
-	/**
-	 * spתpx.
-	 */
-	public static int sp2px(float value, Context context) {
-		Resources r;
-		if (context == null) {
-			r = Resources.getSystem();
-		} else {
-			r = context.getResources();
-		}
-		float spvalue = value * r.getDisplayMetrics().scaledDensity;
-		return (int) (spvalue + 0.5f);
-	}
-
-	/**
-	 * pxתsp.
-	 */
-	public static int px2sp(float value) {
-		final float scale = mContext.getResources().getDisplayMetrics().scaledDensity;
-		return (int) (value / scale + 0.5f);
-	}
-
-	/**
-	 * pxתsp.
-	 */
-	public static int px2sp(float value, Context context) {
-		final float scale = context.getResources().getDisplayMetrics().scaledDensity;
-		return (int) (value / scale + 0.5f);
 	}
 }

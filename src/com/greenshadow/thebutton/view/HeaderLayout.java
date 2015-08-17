@@ -48,7 +48,7 @@ public class HeaderLayout extends LinearLayout {
 		initViews();
 	}
 
-	public void initViews() {
+	private void initViews() {
 		mLayoutLeftContainer = (LinearLayout) findViewByHeaderId(R.id.header_layout_leftview_container);
 		mLayoutRightContainer = (LinearLayout) findViewByHeaderId(R.id.header_layout_rightview_container);
 		mHtvSubTitle = (TextView) findViewByHeaderId(R.id.header_htv_subtitle);
