@@ -25,6 +25,7 @@ import cn.bmob.im.util.BmobJsonUtil;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.FindListener;
 
+import com.greenshadow.thebutton.config.Config;
 import com.greenshadow.thebutton.ui.MainActivity;
 import com.greenshadow.thebutton.util.CollectionUtils;
 import com.greenshadow.thebutton.util.CommonUtils;
@@ -83,7 +84,7 @@ public class MyMessageReceiver extends BroadcastReceiver {
 					CustomApplication.getInstance().logout();
 				}
 			}
-		} else if (tag.equals("push")) { // 推送通知
+		} else if (tag.equals(Config.TAG_PUSH)) { // 推送通知
 			// 如果用户设置不允许推送则不推送
 			if (!CustomApplication.getInstance().getSpUtil()
 					.isAllowPushNotify())
@@ -102,7 +103,7 @@ public class MyMessageReceiver extends BroadcastReceiver {
 			// 发送推送通知
 			CustomApplication.getInstance().getNotificationUtil()
 					.notifyPush(context, title, content, url, pushTag);
-		} else if (tag.equals("update")) {
+		} else if (tag.equals(Config.TAG_UPDATE)) { // 更新通知
 			CustomApplication.getInstance().getNotificationUtil()
 					.notifyUpdate(context);
 		} else {
@@ -112,8 +113,7 @@ public class MyMessageReceiver extends BroadcastReceiver {
 					BmobConstant.PUSH_KEY_TOID);
 			String msgTime = BmobJsonUtil.getString(jo,
 					BmobConstant.PUSH_READED_MSGTIME);
-			if (fromId != null
-					&& !BmobDB.create(context, toId).isBlackUser(fromId)) {// 该消息发送方不为黑名单用户
+			if (fromId != null) {
 				if (TextUtils.isEmpty(tag)) {// 不携带tag标签--此可接收陌生人的消息
 					BmobChatManager.getInstance(context).createReceiveMsg(json,
 							new OnReceiveListener() {
@@ -196,10 +196,6 @@ public class MyMessageReceiver extends BroadcastReceiver {
 						}
 					}
 				}
-			} else {// 在黑名单期间所有的消息都应该置为已读，不然等取消黑名单之后又可以查询的到
-				BmobChatManager.getInstance(context).updateMsgReaded(true,
-						fromId, msgTime);
-				BmobLog.i("该消息发送方为黑名单用户");
 			}
 		}
 	}

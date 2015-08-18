@@ -15,6 +15,16 @@ public class Config {
 	public static final boolean DEBUG_MODE = true;
 
 	/**
+	 * 推送通知
+	 */
+	public static final String TAG_PUSH = "push";
+
+	/**
+	 * 更新
+	 */
+	public static final String TAG_UPDATE = "update";
+
+	/**
 	 * 不感兴趣广播的Action
 	 */
 	public static final String UNINTERESTE_ACTION = "com.greenshadow.thebutton.uninterested";
