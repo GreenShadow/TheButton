@@ -180,7 +180,7 @@ public class UpdateActivity extends ActivityBase implements
 			public void run() {
 				BufferedReader bufferedReader = null;
 				try {
-					URL url = new URL(Config.NEWS_URL);
+					URL url = new URL(Config.NEW_VERSION_DETAILS);
 					bufferedReader = new BufferedReader(new InputStreamReader(
 							url.openStream()));
 					String line;
