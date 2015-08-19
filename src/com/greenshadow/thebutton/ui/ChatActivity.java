@@ -998,10 +998,6 @@ public class ChatActivity extends ActivityBase implements OnClickListener,
 	}
 
 	@Override
-	public void onLoadMore() {
-	}
-
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (layout_more.getVisibility() == 0) {

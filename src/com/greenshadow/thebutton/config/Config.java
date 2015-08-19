@@ -73,4 +73,9 @@ public class Config {
 	 * apk url
 	 */
 	public static final String APK_URL = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git/raw/master/TheButton.apk";
+
+	/**
+	 * ÐÂÎÅurl
+	 */
+	public static final String NEWS_URL = "https://coding.net/u/GreenShadow/p/TheButtonUpdate/git/raw/master/news";
 }

@@ -244,7 +244,5 @@ public class XListView extends ListView implements OnScrollListener {
 
 	public interface IXListViewListener {
 		public void onRefresh();
-
-		public void onLoadMore();
 	}
 }

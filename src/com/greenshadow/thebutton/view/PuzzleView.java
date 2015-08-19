@@ -1,11 +1,15 @@
 package com.greenshadow.thebutton.view;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 import com.greenshadow.thebutton.R;
+import com.greenshadow.thebutton.bean.PuzzleImage;
 import com.greenshadow.thebutton.util.ImagePiece;
 import com.greenshadow.thebutton.util.ImageSplitterUtil;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -29,7 +33,7 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	/**
 	 * 设置拼图的阶数
 	 */
-	private int mColumn = 4;
+	private int mColumn = 3;
 	/**
 	 * 容器的内边距
 	 */
@@ -46,7 +50,6 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	 */
 	private Bitmap mBitmap;
 	private List<ImagePiece> mItemBitmaps;
-	private boolean once;
 
 	/**
 	 * 游戏面板的宽度
@@ -55,7 +58,7 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 
 	private boolean isGameSuccess;
 	private boolean isGameOver;
-	private boolean isPause;
+	private boolean isPalying = false;
 
 	/**
 	 * 动画层
@@ -69,8 +72,11 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	/**
 	 * 游戏时间
 	 */
-	private int mTime = 60;
+	private int mTime;
 
+	/**
+	 * 游戏监听器
+	 */
 	public interface GameComplitListener {
 		void success();
 
@@ -95,13 +101,14 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case TIME_CHANGED:
-				if (isGameSuccess || isGameOver || isPause)
+				if (isGameSuccess || isGameOver)
 					return;
 				if (mListener != null) {
 					mListener.timechanged(mTime);
 				}
 				if (mTime == 0) {
 					isGameOver = true;
+					isPalying = false;
 					mListener.gameover();
 					return;
 				}
@@ -113,11 +120,31 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 				if (mListener != null) {
 					mListener.success();
 				}
+				isPalying = false;
 				break;
 
 			}
 		};
 	};
+
+	// 设置数据源
+	private static ArrayList<PuzzleImage> datas;
+	static {
+		datas = new ArrayList<PuzzleImage>();
+		datas.add(new PuzzleImage(R.drawable.puzzle0));
+		datas.add(new PuzzleImage(R.drawable.puzzle1));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle2));
+	}
+
+	public static ArrayList<PuzzleImage> getDatas() {
+		return datas;
+	}
 
 	public PuzzleView(Context context) {
 		this(context, null);
@@ -141,18 +168,32 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 		// 取宽和高中的小值
 		mWidth = Math.min(getMeasuredHeight(), getMeasuredWidth());
 
-		if (!once) {
-			// 进行切图，以及排序
-			initBitmap();
-			// 设置ImageView(Item)的宽高等属性
-			initItem();
-			mHandler.sendEmptyMessage(TIME_CHANGED);
-
-			once = true;
-		}
-
 		setMeasuredDimension(mWidth, mWidth);
 
+	}
+
+	/**
+	 * 设置内置图片
+	 * 
+	 * @param position
+	 */
+	public void setSelection(int position) {
+		mBitmap = BitmapFactory.decodeResource(getResources(),
+				datas.get(position).getResId());
+	}
+
+	/**
+	 * 开始游戏
+	 */
+	public void startGame() {
+		mTime = 60;
+		isGameOver = false;
+		// 进行切图，以及排序
+		initBitmap();
+		// 设置ImageView(Item)的宽高等属性
+		initItem();
+		isPalying = true;
+		mHandler.sendEmptyMessage(TIME_CHANGED);
 	}
 
 	/**
@@ -161,7 +202,7 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	private void initBitmap() {
 		if (mBitmap == null) {
 			mBitmap = BitmapFactory.decodeResource(getResources(),
-					R.drawable.puzzle);
+					R.drawable.puzzle0);
 		}
 		mItemBitmaps = ImageSplitterUtil.splitImage(mBitmap, mColumn);
 
@@ -216,18 +257,6 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 			addView(item, lp);
 		}
 
-	}
-
-	public void pause() {
-		isPause = true;
-		mHandler.removeMessages(TIME_CHANGED);
-	}
-
-	public void resume() {
-		if (isPause) {
-			isPause = false;
-			mHandler.sendEmptyMessage(TIME_CHANGED);
-		}
 	}
 
 	/**
@@ -372,12 +401,12 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	/**
 	 * 根据tag获取Id
 	 */
-	public int getImageIdByTag(String tag) {
+	private int getImageIdByTag(String tag) {
 		String[] split = tag.split("_");
 		return Integer.parseInt(split[0]);
 	}
 
-	public int getImageIndexByTag(String tag) {
+	private int getImageIndexByTag(String tag) {
 		String[] split = tag.split("_");
 		return Integer.parseInt(split[1]);
 	}
@@ -389,9 +418,15 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 		}
 	}
 
-	public void restart() {
-		mTime = 120;
-		initBitmap();
-		mHandler.sendEmptyMessage(TIME_CHANGED);
+	public void restartGame() {
+		if (isPalying)
+			mHandler.removeMessages(TIME_CHANGED);
+		isGameSuccess = false;
+		isGameOver = false;
+		startGame();
+	}
+
+	public void stopGame() {
+		isGameOver = true;
 	}
 }

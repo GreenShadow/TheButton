@@ -8,7 +8,7 @@
         android:id="@+id/puzzle_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:text="@string/puzzle_default_time"
         android:textColor="#EA7821"
@@ -22,10 +22,24 @@
         android:padding="3dp" />
 
     <Button
+        android:id="@+id/puzzle_restart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_action_bar_height"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_login_selector"
+        android:text="@string/restart_game"
+        android:textColor="@color/base_color_text_white"
+        android:textSize="@dimen/text_size_large" />
+
+    <Button
         android:id="@+id/puzzle_back"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_action_bar_height"
-        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginTop="10dp"
         android:background="@drawable/btn_login_selector"
         android:text="@string/back"
         android:textColor="@color/base_color_text_white"

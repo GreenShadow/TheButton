@@ -23,6 +23,7 @@ import com.greenshadow.thebutton.CustomApplication;
 import com.greenshadow.thebutton.MyMessageReceiver;
 import com.greenshadow.thebutton.R;
 import com.greenshadow.thebutton.ui.fragment.ContactFragment;
+import com.greenshadow.thebutton.ui.fragment.NewsFragment;
 import com.greenshadow.thebutton.ui.fragment.RecentFragment;
 import com.greenshadow.thebutton.ui.fragment.SettingsFragment;
 
@@ -32,6 +33,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 	private ContactFragment contactFragment;
 	private RecentFragment recentFragment;
 	private SettingsFragment settingFragment;
+	private NewsFragment newsFragment;
 	private Fragment[] fragments;
 	private int currentTabIndex;
 
@@ -51,18 +53,21 @@ public class MainActivity extends ActivityBase implements EventListener {
 	}
 
 	private void initView() {
-		mTabs = new Button[3];
+		mTabs = new Button[4];
 		mTabs[0] = (Button) findViewById(R.id.btn_message);
 		mTabs[1] = (Button) findViewById(R.id.btn_contract);
-		mTabs[2] = (Button) findViewById(R.id.btn_set);
+		mTabs[2] = (Button) findViewById(R.id.btn_news);
+		mTabs[3] = (Button) findViewById(R.id.btn_set);
+		// TODO
 		iv_recent_tips = (ImageView) findViewById(R.id.iv_recent_tips);
 		iv_contact_tips = (ImageView) findViewById(R.id.iv_contact_tips);
 
 		contactFragment = new ContactFragment();
 		recentFragment = new RecentFragment();
 		settingFragment = new SettingsFragment();
+		newsFragment = new NewsFragment();
 		fragments = new Fragment[] { recentFragment, contactFragment,
-				settingFragment };
+				newsFragment, settingFragment };
 
 		viewPager = (ViewPager) findViewById(R.id.view_pager);
 		viewPager.setAdapter(new FragmentPagerAdapter(
@@ -116,8 +121,11 @@ public class MainActivity extends ActivityBase implements EventListener {
 		case R.id.btn_contract:
 			viewPager.setCurrentItem(1);
 			break;
-		case R.id.btn_set:
+		case R.id.btn_news:
 			viewPager.setCurrentItem(2);
+			break;
+		case R.id.btn_set:
+			viewPager.setCurrentItem(3);
 			break;
 		}
 	}

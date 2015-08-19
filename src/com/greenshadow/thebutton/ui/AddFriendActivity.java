@@ -15,7 +15,6 @@ import android.widget.EditText;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.task.BRequest;
 import cn.bmob.im.util.BmobLog;
-import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
 
 import com.greenshadow.thebutton.R;
@@ -33,7 +32,6 @@ public class AddFriendActivity extends ActivityBase implements OnClickListener,
 	private EditText et_find_name;
 	private Button btn_search;
 
-	private int curPage = 0;
 	private ProgressDialog progress;
 	private String searchName = "";
 
@@ -91,8 +89,6 @@ public class AddFriendActivity extends ActivityBase implements OnClickListener,
 						ShowToast("用户不存在");
 						mListView.setPullLoadEnable(false);
 						refreshPull();
-						// 这样能保证每次查询都是从头开始
-						curPage = 0;
 					}
 
 					@Override
@@ -120,31 +116,7 @@ public class AddFriendActivity extends ActivityBase implements OnClickListener,
 						} else {
 							refreshPull();
 						}
-						// 这样能保证每次查询都是从头开始
-						curPage = 0;
 					}
-				});
-
-	}
-
-	private void queryMoreSearchList(int page) {
-		userManager.queryUserByPage(true, page, searchName,
-				new FindListener<BmobChatUser>() {
-					@Override
-					public void onSuccess(List<BmobChatUser> arg0) {
-						if (CollectionUtils.isNotNull(arg0)) {
-							adapter.addAll(arg0);
-						}
-						refreshLoad();
-					}
-
-					@Override
-					public void onError(int arg0, String arg1) {
-						ShowLog("搜索更多用户出错:" + arg1);
-						mListView.setPullLoadEnable(false);
-						refreshLoad();
-					}
-
 				});
 	}
 
@@ -178,35 +150,6 @@ public class AddFriendActivity extends ActivityBase implements OnClickListener,
 
 	@Override
 	public void onRefresh() {
-	}
-
-	@Override
-	public void onLoadMore() {
-		userManager.querySearchTotalCount(searchName, new CountListener() {
-			@Override
-			public void onSuccess(int arg0) {
-				if (arg0 > users.size()) {
-					curPage++;
-					queryMoreSearchList(curPage);
-				} else {
-					ShowToast("数据加载完成");
-					mListView.setPullLoadEnable(false);
-					refreshLoad();
-				}
-			}
-
-			@Override
-			public void onFailure(int arg0, String arg1) {
-				ShowLog("查询附近的人总数失败" + arg1);
-				refreshLoad();
-			}
-		});
-	}
-
-	private void refreshLoad() {
-		if (mListView.getPullLoading()) {
-			mListView.stopLoadMore();
-		}
 	}
 
 	private void refreshPull() {

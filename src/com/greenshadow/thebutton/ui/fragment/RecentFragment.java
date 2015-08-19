@@ -74,7 +74,6 @@ public class RecentFragment extends FragmentBase implements
 			public void afterTextChanged(Editable s) {
 			}
 		});
-
 	}
 
 	/**
