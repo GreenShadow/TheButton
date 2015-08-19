@@ -94,6 +94,14 @@ public class SettingsFragment extends FragmentBase implements OnClickListener {
 			iv_open_vibrate.setVisibility(View.INVISIBLE);
 			iv_close_vibrate.setVisibility(View.VISIBLE);
 		}
+		boolean isAllowPushNotify = mSharedUtil.isAllowPushNotify();
+		if (isAllowPushNotify) {
+			iv_open_notifacation.setVisibility(View.VISIBLE);
+			iv_close_notifacation.setVisibility(View.INVISIBLE);
+		} else {
+			iv_open_notifacation.setVisibility(View.INVISIBLE);
+			iv_close_notifacation.setVisibility(View.VISIBLE);
+		}
 		btn_logout.setOnClickListener(this);
 		layout_info.setOnClickListener(this);
 	}
