@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.config.BmobConfig;
@@ -64,8 +65,9 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	private Button btn_chat, btn_add_friend;
 	private RelativeLayout layout_head, layout_nick, layout_gender,
-			layout_uninterested;
+			layout_uninterested, layout_set_my_puzzle_difficulty;
 
+	private int difficulty;
 	private String from = "";
 	private String username = "";
 	private User user;
@@ -108,6 +110,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		layout_nick = (RelativeLayout) findViewById(R.id.layout_nick);
 		layout_gender = (RelativeLayout) findViewById(R.id.layout_gender);
 		layout_uninterested = (RelativeLayout) findViewById(R.id.layout_manage_uninterested);
+		layout_set_my_puzzle_difficulty = (RelativeLayout) findViewById(R.id.layout_set_my_puzzle_difficulty);
 		tv_set_gender = (TextView) findViewById(R.id.tv_set_gender);
 		btn_chat = (Button) findViewById(R.id.btn_chat);
 		btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
@@ -122,6 +125,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			layout_nick.setOnClickListener(this);
 			layout_gender.setOnClickListener(this);
 			layout_uninterested.setOnClickListener(this);
+			layout_set_my_puzzle_difficulty.setOnClickListener(this);
 			iv_arraw.setVisibility(View.VISIBLE);
 			btn_chat.setVisibility(View.GONE);
 			btn_add_friend.setVisibility(View.GONE);
@@ -129,6 +133,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		} else {
 			initTopBarForLeft("详细资料");
 			layout_uninterested.setVisibility(View.GONE);
+			layout_set_my_puzzle_difficulty.setVisibility(View.GONE);
 			iv_arraw.setVisibility(View.INVISIBLE);
 			btn_chat.setVisibility(View.VISIBLE);
 			btn_chat.setOnClickListener(this);
@@ -192,7 +197,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	private void initMeData() {
 		User user = userManager.getCurrentUser(User.class);
-		BmobLog.i("hight = " + user.getHight() + ",sex= " + user.getSex());
 		initOtherData(user.getUsername());
 	}
 
@@ -294,12 +298,14 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			showSexChooseDialog();
 			break;
 		case R.id.layout_manage_uninterested:
-			// TODO
 			if (et_set_nick != null) {
 				if (et_set_nick.getVisibility() == View.VISIBLE)
 					updateNick();
 			}
 			startAnimActivity(ManageUninterestedActivity.class);
+			break;
+		case R.id.layout_set_my_puzzle_difficulty:
+			updateDifficulty();
 			break;
 		case R.id.btn_add_friend:// 添加好友
 			addFriend();
@@ -309,6 +315,69 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				avatorPop.dismiss();
 			break;
 		}
+	}
+
+	private void updateDifficulty() {
+		LinearLayout dialogView = (LinearLayout) getLayoutInflater().inflate(
+				R.layout.dialog_update_difficulty, null);
+
+		SeekBar seekBar = (SeekBar) dialogView
+				.findViewById(R.id.seek_difficulty);
+		final TextView tv_difficulty = (TextView) dialogView
+				.findViewById(R.id.tv_difficulty);
+		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				difficulty = progress + 2;
+				tv_difficulty.setText(difficulty + "x" + difficulty + " ");
+				switch (progress) {
+				case 0:
+					tv_difficulty.append("弱智儿童");
+					break;
+				case 1:
+					tv_difficulty.append("so easy~");
+					break;
+				case 2:
+					tv_difficulty.append("正常人");
+					break;
+				case 3:
+					tv_difficulty.append("大神！");
+					break;
+				case 4:
+					tv_difficulty.append("突破天际了！");
+					break;
+				}
+			}
+		});
+		seekBar.setProgress((((User) userManager.getCurrentUser(User.class))
+				.getDifficulty()));
+		new AlertDialog.Builder(this).setTitle("设置难度").setView(dialogView)
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						User u = new User();
+						u.setDifficulty(difficulty - 2);
+						updateUserData(u, new UpdateListener() {
+							@Override
+							public void onSuccess() {
+								ShowToast("修改成功！");
+							}
+
+							@Override
+							public void onFailure(int arg0, String arg1) {
+							}
+						});
+					}
+				}).show();
 	}
 
 	private void showSexChooseDialog() {

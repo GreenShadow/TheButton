@@ -2,7 +2,6 @@ package com.greenshadow.thebutton.bean;
 
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
-import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * User Bean，重载BmobChatUser对象
@@ -10,8 +9,6 @@ import cn.bmob.v3.datatype.BmobRelation;
 public class User extends BmobChatUser {
 
 	private static final long serialVersionUID = 1L;
-
-	private BmobRelation blogs;
 
 	/**
 	 * //显示数据拼音的首字母
@@ -26,24 +23,19 @@ public class User extends BmobChatUser {
 	/**
 	 * 地理坐标
 	 */
-	private BmobGeoPoint location;//
+	private BmobGeoPoint location;
 
-	private Integer hight;
+	/**
+	 * 拼图游戏难度
+	 */
+	private int difficulty = 2;
 
-	public Integer getHight() {
-		return hight;
+	public void setDifficulty(int d) {
+		this.difficulty = d;
 	}
 
-	public void setHight(Integer hight) {
-		this.hight = hight;
-	}
-
-	public BmobRelation getBlogs() {
-		return blogs;
-	}
-
-	public void setBlogs(BmobRelation blogs) {
-		this.blogs = blogs;
+	public int getDifficulty() {
+		return difficulty;
 	}
 
 	public BmobGeoPoint getLocation() {

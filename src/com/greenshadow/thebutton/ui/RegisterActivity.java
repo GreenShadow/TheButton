@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,11 +20,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobQuery;
@@ -32,6 +35,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
+
 import com.greenshadow.thebutton.R;
 import com.greenshadow.thebutton.bean.User;
 import com.greenshadow.thebutton.config.BmobConstants;
@@ -45,6 +49,7 @@ public class RegisterActivity extends BaseActivity {
 
 	private Button btn_register;
 	private EditText et_username, et_password, et_password_confirm, et_nick;
+	private Spinner spinner;
 	private ImageView iv_set_avator;
 	private RelativeLayout layout_set_avator;
 	private boolean haveAvator = false;
@@ -65,6 +70,9 @@ public class RegisterActivity extends BaseActivity {
 		et_password = (EditText) findViewById(R.id.et_password);
 		et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
 		et_nick = (EditText) findViewById(R.id.et_nick);
+		spinner = (Spinner) findViewById(R.id.spinner);
+		spinner.setAdapter(new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, new String[] { "男", "女" }));
 		iv_set_avator = (ImageView) findViewById(R.id.iv_set_avator);
 		layout_set_avator = (RelativeLayout) findViewById(R.id.layout_set_avator);
 		layout_set_avator.setOnClickListener(new OnClickListener() {
@@ -133,6 +141,11 @@ public class RegisterActivity extends BaseActivity {
 		String password = et_password.getText().toString();
 		String pwd_again = et_password_confirm.getText().toString();
 		String nick = et_nick.getText().toString();
+		boolean sex;
+		if (spinner.getSelectedItemPosition() == 1)
+			sex = true;
+		else
+			sex = false;
 
 		if (!haveAvator) {
 			ShowToast("请选择头像");
@@ -168,8 +181,8 @@ public class RegisterActivity extends BaseActivity {
 		bu.setUsername(name);
 		bu.setPassword(password);
 		bu.setNick(nick);
-		// 将user和设备id进行绑定aa
-		bu.setSex(true);
+		bu.setSex(sex);
+		bu.setDifficulty(4);
 		bu.setDeviceType("android");
 		bu.setInstallId(BmobInstallation.getInstallationId(this));
 		bu.signUp(RegisterActivity.this, new SaveListener() {
@@ -177,12 +190,14 @@ public class RegisterActivity extends BaseActivity {
 			public void onSuccess() {
 				// 上传头像
 				uploadAvatar();
+
 				progress.dismiss();
 				ShowToast("注册成功");
 				// 将设备与username进行绑定
 				userManager.bindInstallationForRegister(bu.getUsername());
-				// 更新地理位置信息
 				updateUserLocation();
+
+				updateDifficulty();
 				// 发广播通知登陆页面退出
 				sendBroadcast(new Intent(
 						BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
@@ -198,6 +213,21 @@ public class RegisterActivity extends BaseActivity {
 				BmobLog.i(arg1);
 				ShowToast("注册失败:" + arg1);
 				progress.dismiss();
+			}
+		});
+	}
+
+	protected void updateDifficulty() {
+		User u = new User();
+		u.setDifficulty(4);
+		updateUserData(u, new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				ShowToast("难度更新成功");
+			}
+
+			@Override
+			public void onFailure(int arg0, String arg1) {
 			}
 		});
 	}

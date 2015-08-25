@@ -134,7 +134,7 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 		datas.add(new PuzzleImage(R.drawable.puzzle0));
 		datas.add(new PuzzleImage(R.drawable.puzzle1));
 		datas.add(new PuzzleImage(R.drawable.puzzle2));
-		datas.add(new PuzzleImage(R.drawable.puzzle2));
+		datas.add(new PuzzleImage(R.drawable.puzzle3));
 		datas.add(new PuzzleImage(R.drawable.puzzle2));
 		datas.add(new PuzzleImage(R.drawable.puzzle2));
 		datas.add(new PuzzleImage(R.drawable.puzzle2));
@@ -173,6 +173,15 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	}
 
 	/**
+	 * 设置难度
+	 * 
+	 * @param difficulty
+	 */
+	public void setDifficulty(int difficulty) {
+		mColumn = difficulty;
+	}
+
+	/**
 	 * 设置内置图片
 	 * 
 	 * @param position
@@ -180,6 +189,7 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 	public void setSelection(int position) {
 		mBitmap = BitmapFactory.decodeResource(getResources(),
 				datas.get(position).getResId());
+		mItemBitmaps = ImageSplitterUtil.splitImage(mBitmap, mColumn);
 	}
 
 	/**
@@ -203,9 +213,8 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 		if (mBitmap == null) {
 			mBitmap = BitmapFactory.decodeResource(getResources(),
 					R.drawable.puzzle0);
+			mItemBitmaps = ImageSplitterUtil.splitImage(mBitmap, mColumn);
 		}
-		mItemBitmaps = ImageSplitterUtil.splitImage(mBitmap, mColumn);
-
 		// 使用sort完成我们的乱序
 		Collections.sort(mItemBitmaps, new Comparator<ImagePiece>() {
 			@Override
@@ -223,7 +232,6 @@ public class PuzzleView extends RelativeLayout implements OnClickListener {
 		mItemWidth = (mWidth - mPadding * 2 - mMargin * (mColumn - 1))
 				/ mColumn;
 		mGamePintuItems = new ImageView[mColumn * mColumn];
-		// 生成我们的Item，设置Rule
 		for (int i = 0; i < mGamePintuItems.length; i++) {
 			ImageView item = new ImageView(getContext());
 			item.setOnClickListener(this);

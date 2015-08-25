@@ -28,6 +28,7 @@ public class PuzzleGameActivity extends ActivityBase implements OnClickListener 
 	private Button puzzleBack, puzzleRestart;
 	private AlertDialog dialog;
 	private String name;
+	private int difficulty;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -36,6 +37,7 @@ public class PuzzleGameActivity extends ActivityBase implements OnClickListener 
 		setContentView(R.layout.activity_puzzle);
 
 		name = getIntent().getStringExtra("name");
+		difficulty = getIntent().getIntExtra("difficulty", 4);
 
 		ChoosePuzzleImageAdapter adapter = new ChoosePuzzleImageAdapter(this,
 				PuzzleView.getDatas());
@@ -51,6 +53,7 @@ public class PuzzleGameActivity extends ActivityBase implements OnClickListener 
 		});
 
 		puzzleView = (PuzzleView) findViewById(R.id.puzzle_view);
+		puzzleView.setDifficulty(difficulty + 2);
 		mTime = (TextView) findViewById(R.id.puzzle_time);
 		puzzleBack = (Button) findViewById(R.id.puzzle_back);
 		puzzleRestart = (Button) findViewById(R.id.puzzle_restart);

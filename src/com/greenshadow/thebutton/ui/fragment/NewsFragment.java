@@ -7,8 +7,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import cn.bmob.im.util.BmobJsonUtil;
+
 import com.greenshadow.thebutton.R;
 import com.greenshadow.thebutton.adapter.NewsAdapter;
 import com.greenshadow.thebutton.bean.NewsBean;
@@ -29,6 +33,7 @@ import com.greenshadow.thebutton.view.xlist.XListView;
 public class NewsFragment extends FragmentBase {
 
 	private XListView list_news;
+	private ProgressBar progress;
 	private NewsAdapter newsAdapter;
 	private List<NewsBean> datas;
 
@@ -40,6 +45,7 @@ public class NewsFragment extends FragmentBase {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == COMPLETE) {
 				inflateView();
+				progress.setVisibility(View.GONE);
 			}
 		}
 	};
@@ -59,10 +65,12 @@ public class NewsFragment extends FragmentBase {
 	private void initView() {
 		initTopBarForOnlyTitle("十条新闻");
 		list_news = (XListView) findViewById(R.id.list_news);
+		progress = (ProgressBar) findViewById(R.id.progress);
 		list_news.setVisibility(View.INVISIBLE);
-		if (datas == null || datas.size() == 0)
+		if (datas == null || datas.size() == 0) {
+			progress.setVisibility(View.VISIBLE);
 			getList();
-		else
+		} else
 			inflateView();
 
 	}

@@ -51,6 +51,7 @@ public class ShakeActivity extends ActivityBase implements SensorEventListener {
 				|| Math.abs(values[2]) > MINUMUM_NUMBER) {
 			sensorManager.unregisterListener(this);
 			vibrator.vibrate(200);
+			updateUserLocation();
 			startAnimActivity(new Intent(ShakeActivity.this,
 					NearPeopleOnMapActivity.class));
 			ShakeActivity.this.finish();

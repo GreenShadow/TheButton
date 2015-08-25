@@ -44,6 +44,7 @@ public class StrangerInfoActivity extends ActivityBase {
 				Intent intent = new Intent(StrangerInfoActivity.this,
 						PuzzleGameActivity.class);
 				intent.putExtra("name", user.getUsername());
+				intent.putExtra("difficulty", user.getDifficulty());
 				startActivityForResult(intent, GAME);
 			}
 		});

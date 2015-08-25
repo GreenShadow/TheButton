@@ -30,5 +30,4 @@ public class ChoosePuzzleImageAdapter extends BaseListAdapter<PuzzleImage> {
 
 		return convertView;
 	}
-
 }

@@ -42,6 +42,21 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:text="@string/add_gender"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            style="@style/Register_Edit" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/Register_Input" >
+
+        <TextView
+            style="@style/Smile.TextView._Black"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/add_nick"
             android:textStyle="bold" />
 

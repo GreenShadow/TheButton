@@ -8,9 +8,22 @@
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
 
-    <com.greenshadow.thebutton.view.xlist.XListView
-        android:id="@+id/list_news"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+        <com.greenshadow.thebutton.view.xlist.XListView
+            android:id="@+id/list_news"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 </LinearLayout>

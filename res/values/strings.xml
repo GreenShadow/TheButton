@@ -34,6 +34,7 @@
     <string name="set_vibrate">震动</string>
     <string name="set_notifacation">允许接收推送消息</string>
     <string name="set_manage_my_uninterested">管理我不感兴趣的标签</string>
+    <string name="set_my_puzzle_difficulty">设置我的拼图难度</string>
     <string name="set_about">关于</string>
     <string name="tips">提示</string>
     <string name="logout">退出登陆</string>

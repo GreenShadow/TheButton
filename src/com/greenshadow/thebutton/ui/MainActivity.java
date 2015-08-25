@@ -105,6 +105,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 			}
 		});
 		viewPager.setOverScrollMode(ViewPager.OVER_SCROLL_NEVER);
+		viewPager.setOffscreenPageLimit(3);
 		// 把第一个tab设为选中状态
 		mTabs[0].setSelected(true);
 
